@@ -3,7 +3,12 @@ import { RouterLink, RouterView } from 'vue-router'
 import Footer from './components/Footer.vue'
 import { ref ,onMounted ,watch} from 'vue'
 
-
+//偵測用戶離開
+window.onbeforeunload = function(){
+	if (!confirm("")) {
+		return '';
+	}
+};
 
 
 document.onmousemove = function(event){

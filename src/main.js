@@ -12,3 +12,10 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
+
+
+
+//禁止右鍵
+document.oncontextmenu = function(){
+    window.event.returnValue=false; 
+}
