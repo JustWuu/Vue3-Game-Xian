@@ -8,19 +8,17 @@ import { ref ,onMounted ,watch} from 'vue'
 import { useCounterStore } from "../stores/counter.js"
 import Chat from '../components/Chat.vue'
 import Nav from '../components/Nav.vue'
-
+import Info from '../components/Info.vue'
 </script>
 
 <template>
 <div id="center_wrapper" class="flex_center">
   <div id="wrapper">
-    <div class="info">
-
-
-    </div>
     <div class="home_top">
-      <Chat/>
-      
+
+      <div id="Info"><Info/></div>
+      <div id="Chat"><Chat/></div>
+
     </div>
 
     <Nav/>
@@ -30,7 +28,5 @@ import Nav from '../components/Nav.vue'
 
 
 <style lang="scss" scoped>
-.home_top{
-  height: 95%;
-}
+
 </style>

@@ -5,11 +5,11 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <nav>
-    <RouterLink to="/">洞府</RouterLink>  
+    <RouterLink to="/home">洞府</RouterLink>  
     <RouterLink to="/make">鍛造</RouterLink>
     <RouterLink to="/alchemy">煉丹</RouterLink>
     <RouterLink to="/sublimation">修煉</RouterLink>
-    <RouterLink to="/pack">背包</RouterLink>
+    <RouterLink to="/pack">行囊</RouterLink>
     <RouterLink to="/start">旅途</RouterLink>
   </nav>
 </template>

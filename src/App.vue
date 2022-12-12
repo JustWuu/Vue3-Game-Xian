@@ -27,7 +27,7 @@ document.onmousemove = function(event){
 </script>
 
 <template>
-  <h3>無盡仙途</h3>
+  <h1 style="margin: 0px;">無盡仙途</h1>
 
   
   <RouterView />
@@ -43,12 +43,6 @@ document.onmousemove = function(event){
 </template>
 
 <style lang="scss" scoped>
-
-
-
-
-
-
 
 #box999{
   width:10px;
@@ -76,6 +70,20 @@ document.onmousemove = function(event){
 在部分場景會出現材料，材料出現時會依使用者使角色上升的靈力來排行
 由高至低排序選擇權，每場使用者只有數次選擇機會
 使用者可將材料製成各種道具，道具可給予角色也可自用
+
+new
+故事大概：初入仙門的玩家，意外得到可以以器靈姿態進入任何世界位面的道具
+穿梭期間原本世界的時間將會停止，玩家藉此培養其他修仙者
+並在期間想方設法將任何物資帶回納為己用
+
+玩家每場結束可以獲得抽取事件的“位面碎片”
+境界：練體、煉氣、築基、結丹、金丹、元嬰、化神、真仙
+
+
+註冊資料限制
+玩家限制ＩＤ 6碼中文 / 12碼英數，中英只能擇一命名法
+
+
 */
 </style>
 

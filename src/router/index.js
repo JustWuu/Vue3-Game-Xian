@@ -5,6 +5,7 @@ import MakeView from '../views/MakeView.vue'
 import PackView from '../views/PackView.vue'
 import SublimationView from '../views/SublimationView.vue'
 import StartView from '../views/StartView.vue'
+import LoginView from '../views/LoginView.vue'
 
 
 const router = createRouter({
@@ -12,6 +13,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/home',
       name: 'home',
       component: HomeView
     },

@@ -6,10 +6,7 @@ import Nav from '../components/Nav.vue'
 <template>
 <div id="center_wrapper" class="flex_center">
   <div id="wrapper">
-    <div class="info">
 
-
-    </div>
     <div class="home_top">
 
     </div>
@@ -21,7 +18,5 @@ import Nav from '../components/Nav.vue'
 
 
 <style lang="scss" scoped>
-.home_top{
-  height: 95%;
-}
+
 </style>
