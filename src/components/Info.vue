@@ -1,20 +1,21 @@
 <script setup>
-
+import { useCounterStore } from "../stores/counter.js"
+const User = useCounterStore()
 
 
 </script>
 <template>
  <div class="player-home">
-    <div class="player-img"><img src="../../public/gg0021.png" alt=""></div>
+    <div class="player-img"><img :src="User.Player.img" alt=""></div>
     <div class="profile-box">
     <div class="profile-lv">
-        <span>元嬰巔峰尊者</span>
-        <p>位面碎片：9999</p>
-        <p>影響力：9999</p>
+        <span>{{User.Player.name}}</span>
+        <p>位面碎片：{{User.Player.fragments}}</p>
+        <p>影響度：{{User.Player.interfere}}</p>
     </div>
-    <div class="profile-data">靈力：6871283</div>
-    <div class="profile-data">神力：12312</div>
-    <div class="profile-data">魄力：143</div>
+    <div class="profile-data">靈力：{{User.Player.power}}</div>
+    <div class="profile-data">劫運：{{User.Player.probability}}%</div>
+    <div class="profile-data">靈石：{{User.Player.money}}</div>
     </div>
 </div>
 </template>

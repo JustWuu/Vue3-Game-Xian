@@ -1,6 +1,5 @@
 <script setup>
 import Nav from '../components/Nav.vue'
-import Info from '../components/Info.vue'
 import { ref ,onMounted ,watch} from 'vue'
 
 const nowtrait = ref('all')
@@ -11,7 +10,6 @@ const nowtrait = ref('all')
 <div id="center_wrapper" class="flex_center">
   <div id="wrapper">
     <div class="home_top">
-      <div id="Info"><Info/></div>
       <div class="type">
         <button @click="nowtrait='all'" :class="{now_botton:nowtrait == 'all'}">全部</button>
         <button @click="nowtrait='消耗'" :class="{now_botton:nowtrait == '消耗'}">消耗</button>
@@ -197,6 +195,8 @@ const nowtrait = ref('all')
       </div>
       </div>
 
+
+      <div class="pack-infohme">
       <div class="pack-info">
         <div class="pack-info-img">
           <div class="info-img">
@@ -220,7 +220,7 @@ const nowtrait = ref('all')
           <button>使用</button>
         </div>
       </div>
-
+      </div>
 
     </div>
 
@@ -232,8 +232,11 @@ const nowtrait = ref('all')
 
 
 <style lang="scss" scoped>
-.pack-info{
+.pack-infohme{
   height: 21.5%;
+}
+.pack-info{
+  height: 100%;
   margin: 4px;
   display: flex;
   .pack-info-img{
@@ -270,7 +273,7 @@ const nowtrait = ref('all')
     flex-wrap: wrap;
     .pack-info-name{
       width: 100%;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: #383838;
       font-family: 'zhH';
     }
@@ -312,7 +315,7 @@ const nowtrait = ref('all')
 
 .pack-boxhome{
   width: 100%;
-  height: 60%;
+  height: 70%;
   overflow: auto;
   border-bottom: solid 2px;
   .pack-boxtop{
@@ -320,6 +323,13 @@ const nowtrait = ref('all')
     flex-wrap: wrap;
     height:auto ;
   }
+.pack-box:hover{
+padding: 0px;
+border: solid 2px;
+cursor:pointer;
+transition: .2s;
+}
+
 .pack-box{
   width: 20%;
   height: auto;
@@ -362,6 +372,7 @@ const nowtrait = ref('all')
   border-top: 2px solid;
   border-bottom: 3px solid;
   padding: 4px;
+  height: 8%;
   width: 100%;
   display: flex;
   justify-content:space-around;

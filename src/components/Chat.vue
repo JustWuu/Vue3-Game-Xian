@@ -1,8 +1,9 @@
 <script setup>
-import { useCounterStore } from "../stores/counter.js"
 import { ref ,onMounted ,watch} from 'vue'
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref as fbref, set, child, get, update, push, onValue, } from "firebase/database";
+import { useCounterStore } from "../stores/counter.js"
+const User = useCounterStore()
 const firebaseConfig = {
   apiKey: "AIzaSyBZbHSiAQrJktVbyRoJ8i6EwCLns-TMmfk",
   authDomain: "mygame-xian.firebaseapp.com",
@@ -16,8 +17,6 @@ const firedata = initializeApp(firebaseConfig);
 const db = getDatabase(firedata);
 
 const chatRef = fbref(db, 'Chat/');
-
-const User = useCounterStore()
 
 const message = ref('')
 
@@ -33,9 +32,9 @@ function addmessage(){
   }
   let Today = new Date();
   set(fbref(db, `Chat/${key}`), {
-    name:'元嬰巔峰尊者',//User.user.account,
+    name:User.Player.name,
     message:message.value,
-    icon:'../../public/gg0022.png',//User.Profile,
+    icon:User.Player.img,
     time:Today.getFullYear() +"/"+ (Today.getMonth()+1) +"/"+ Today.getDate() +" -"+ Today.getHours()+":"+ Today.getMinutes() +":"+ Today.getSeconds()+"-",
   })
   message.value = ""
