@@ -33,6 +33,7 @@ function addmessage(){
   let Today = new Date();
   set(fbref(db, `Chat/${key}`), {
     name:User.Player.name,
+    lv:User.Player.lv,
     message:message.value,
     icon:User.Player.img,
     time:Today.getFullYear() +"/"+ (Today.getMonth()+1) +"/"+ Today.getDate() +" -"+ Today.getHours()+":"+ Today.getMinutes() +":"+ Today.getSeconds()+"-",
@@ -80,7 +81,7 @@ const open = ref(false)
   
       <div class="chat-img"><img :src="item.icon" alt=""></div>
       <div class="chat-font">
-        <span>{{item.name}}：</span><p class="chat-time">{{item.time}}</p>
+        <span>{{item.lv}}境 - </span><span>{{item.name}}：</span><p class="chat-time">{{item.time}}</p>
         <p class="chat-text">{{item.message}}</p>   
       </div> 
     </div>

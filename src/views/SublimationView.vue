@@ -2,6 +2,7 @@
 import Nav from '../components/Nav.vue'
 import { useCounterStore } from "../stores/counter.js"
 import { ref ,onMounted ,watch} from 'vue'
+import { useRoute } from 'vue-router';
 const User = useCounterStore()
 
 //每次進頁面判斷是否在打坐，是就重啟計時器
@@ -124,6 +125,12 @@ function powerGOGO(){
       case "真仙":
       User.Player.power += 50
       break;
+      case "真神":
+      User.Player.power += 500
+      break;
+      case "悟道":
+      User.Player.power += 5000
+      break;
       default:
       console.log('偵測失敗')
       break;
@@ -162,20 +169,157 @@ function checkcatastrophe(){
     checkcata.value = true
   }
 }
-
+//開始渡劫
 function catastrophe(){
   if(User.Player.meditate){
     alert('正在打坐，無法進行渡劫')
     return
   }else{
-    alert('ＧＯＧＯ')  
+    //生成隨機數
+    let random = Math.floor(Math.random()*100+1)
+
+    //計算
+    switch (User.Player.lv) {
+      case "練體":
+      if(User.Player.power < 999){
+        alert('靈力不足，需要999靈力')
+      }else if(random < User.Player.probability){
+        alert('渡劫成功，晉升煉氣境！')
+        User.Player.lv = "煉氣"
+        User.Player.power = 0
+        User.Player.probability = 20
+      }else{
+        //失敗會加1%機率
+        User.Player.probability ++
+        alert('渡劫失敗')
+      }
+      break;
+      case "煉氣":
+      if(User.Player.power < 2999){
+        alert('靈力不足，需要2999靈力')
+      }else if(random < User.Player.probability){
+        alert('渡劫成功，晉升築基境！')
+        User.Player.lv = "築基"
+        User.Player.power = 0
+        User.Player.probability = 16
+      }else{
+        //失敗會加1%機率
+        User.Player.probability ++
+        alert('渡劫失敗')
+      }
+      break;
+      case "築基":
+      if(User.Player.power < 5999){
+        alert('靈力不足，需要5999靈力')
+      }else if(random < User.Player.probability){
+        alert('渡劫成功，晉升結丹境！')
+        User.Player.lv = "結丹"
+        User.Player.power = 0
+        User.Player.probability = 8
+      }else{
+        //失敗會加1%機率
+        User.Player.probability ++
+        alert('渡劫失敗')
+      }
+      break;
+      case "結丹":
+      if(User.Player.power < 10000){
+        alert('靈力不足，需要10000靈力')
+      }else if(random < User.Player.probability){
+        alert('渡劫成功，晉升金丹境！')
+        User.Player.lv = "金丹"
+        User.Player.power = 0
+        User.Player.probability = 4
+      }else{
+        //失敗會加1%機率
+        User.Player.probability ++
+        alert('渡劫失敗')
+      }
+      break;
+      case "金丹":
+      if(User.Player.power < 20000){
+        alert('靈力不足，需要20000靈力')
+      }else if(random < User.Player.probability){
+        alert('渡劫成功，晉升元嬰境！')
+        User.Player.lv = "元嬰"
+        User.Player.power = 0
+        User.Player.probability = 3
+      }else{
+        //失敗會加1%機率
+        User.Player.probability ++
+        alert('渡劫失敗')
+      }
+      break;
+      case "元嬰":
+      if(User.Player.power < 40000){
+        alert('靈力不足，需要40000靈力')
+      }else if(random < User.Player.probability){
+        alert('渡劫成功，晉升化神境！')
+        User.Player.lv = "化神"
+        User.Player.power = 0
+        User.Player.probability = 2
+      }else{
+        //失敗會加1%機率
+        User.Player.probability ++
+        alert('渡劫失敗')
+      }
+      break;
+      case "化神":
+      if(User.Player.power < 80000){
+        alert('靈力不足，需要80000靈力')
+      }else if(random < User.Player.probability){
+        alert('渡劫成功，晉升真仙境！')
+        User.Player.lv = "真仙"
+        User.Player.power = 0
+        User.Player.probability = 1
+      }else{
+        //失敗會加1%機率
+        User.Player.probability ++
+        alert('渡劫失敗')
+      }
+      break;
+      case "真仙":
+      if(User.Player.power < 999999){
+        alert('你已達頂尖境界')
+      }else if(random < User.Player.probability){
+        alert('渡劫成功，晉升真神境！')
+        User.Player.lv = "真神"
+        User.Player.power = 0
+        User.Player.probability = 1
+      }else{
+        //失敗會加1%機率
+        User.Player.probability ++
+        alert('渡劫失敗')
+      }
+      break;
+      case "真神":
+      if(User.Player.power < 9999999){
+        alert('你已達頂尖境界')
+      }else if(random < User.Player.probability){
+        alert('渡劫成功，晉升悟道境！')
+        User.Player.lv = "悟道"
+        User.Player.power = 0
+        User.Player.probability = 1
+      }else{
+        //失敗會加1%機率
+        User.Player.probability ++
+        alert('渡劫失敗')
+      }
+      break;
+      default:
+      console.log('偵測失敗')
+      break;
+    }
+
   }
   
 
 
+
   close.value = false
-    checkcata.value = false
+  checkcata.value = false
 }
+
 
 
 
