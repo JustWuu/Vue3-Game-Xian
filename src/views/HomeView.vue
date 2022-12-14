@@ -14,6 +14,7 @@ import Info from '../components/Info.vue'
 <template>
 <div id="center_wrapper" class="flex_center">
   <div id="wrapper">
+    <img class="background-img" src="../../public/images/Character/fc30b93.png" alt="">
     <div class="home_top">
 
       <div id="Info"><Info/></div>

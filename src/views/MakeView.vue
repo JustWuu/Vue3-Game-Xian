@@ -13,15 +13,30 @@ function meditate(){
 }
 meditate()
 
+/**
+ * 鍛造頁顯示所有鍛造物品
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
 </script>
 
 <template>
 <div id="center_wrapper" class="flex_center">
   <div id="wrapper">
     <div class="home_top">
+      
+
+
 
     </div>
-
     <Nav/>
   </div>
 </div>

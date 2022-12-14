@@ -2,6 +2,99 @@
 import { RouterLink, RouterView } from 'vue-router'
 import Footer from './components/Footer.vue'
 import { ref ,onMounted ,watch} from 'vue'
+import { GetIP } from "./components/api.js"; 
+import { useCounterStore } from "./stores/counter.js"
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref as fbref, set, child, get, update,push } from "firebase/database";
+import { useRouter } from 'vue-router'
+const firebaseConfig = {
+  apiKey: "AIzaSyBZbHSiAQrJktVbyRoJ8i6EwCLns-TMmfk",
+  authDomain: "mygame-xian.firebaseapp.com",
+  projectId: "mygame-xian",
+  storageBucket: "mygame-xian.appspot.com",
+  messagingSenderId: "496921879585",
+  appId: "1:496921879585:web:34ead29c0601e5c592af60"
+};
+const firedata = initializeApp(firebaseConfig);
+// const database = getDatabase(firedata);
+// const dbRef = fbre f(getDatabase());
+const db = getDatabase();
+const User = useCounterStore()
+const router = useRouter()
+
+
+//每次進頁面判斷有無登入
+onMounted(( )=>{
+  if(User.Player.name ===''){
+    alert("你沒有登入")
+    router.replace({ path: '/' })
+  }
+})
+
+
+function editCommodity(acc){
+  if(User.Player.name !== ""){
+      let Today = new Date();
+      update(fbref(db,"Users/"+acc),{
+        name:User.Player.name,
+        lv:User.Player.lv,//當前境界
+        props:User.Player.props,//靈力加成道具，只能一個
+        fragments:User.Player.fragments,//位面碎片
+        interfere:User.Player.interfere,//影響度(干涉力)
+        power:User.Player.power,//靈力
+        probability:User.Player.probability,//劫運
+        money:User.Player.money,//靈石
+        img:User.Player.img,//玩家代表人物
+        meditate:User.Player.meditate,//是否打坐
+        meditateStatrt:User.Player.meditateStatrt,//打坐開始當下時間
+        meditateStatrtTime:User.Player.meditateStatrtTime,//打坐當下完整時間
+        item:User.Player.item,//持有道具
+        letter:User.Player.letter,
+        letterArray:User.Player.letterArray,
+
+        time:Today.getFullYear() +"/"+ (Today.getMonth()+1) +"/"+ Today.getDate() +"/"+ Today.getHours()+":"+ Today.getMinutes() +":"+ Today.getSeconds(),
+      })
+  .then(()=>{
+      console.log('更新成功')
+  })
+  .catch((error)=>{
+      alert('出錯啦')
+  })
+  }else{
+      alert("你沒有登入")
+      router.replace({ path: '/' })
+  }
+}
+//監聽用戶資料
+watch(User, () => {
+    editCommodity(User.Player.name)
+});
+
+
+// 下方為IP紀錄
+const IP = ref('')
+GetIP()
+  .then(response => {
+    response = response.data.trim().split('\n').reduce(function(obj, pair) {
+    pair = pair.split('=');
+    return obj[pair[0]] = pair[1], obj;
+  }, {});
+    IP.value = response.ip
+    UpIP()
+  })
+  .catch( error => {
+    console.log(error);
+  })
+
+function UpIP(){
+let Today = new Date();
+const chatRef = fbref(db, 'IP/');
+const key = push(chatRef).key;
+set(fbref(db, `IP/${key}`), {
+    IP:IP.value,
+    time:Today.getFullYear() +"/"+ (Today.getMonth()+1) +"/"+ Today.getDate() +"/"+ Today.getHours()+"-"+ Today.getMinutes()+"-"+ Today.getSeconds(),
+});
+}
 
 //偵測用戶離開
 window.onbeforeunload = function(){
@@ -27,7 +120,7 @@ document.onmousemove = function(event){
 </script>
 
 <template>
-  <h1 style="margin: 0px;">無盡仙途：製作中，資料不紀錄！</h1>
+  <h1 style="margin: 0px;">無盡仙途：製作中</h1>
 
   
   <RouterView />

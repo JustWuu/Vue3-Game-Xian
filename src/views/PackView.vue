@@ -1,8 +1,93 @@
 <script setup>
 import Nav from '../components/Nav.vue'
 import { ref ,onMounted ,watch} from 'vue'
+import { useCounterStore } from "../stores/counter.js"
+const User = useCounterStore()
 
 const nowtrait = ref('all')
+
+//生成道具
+const haveItem = ref([])
+const AllItem = ref([])
+
+onMounted(( )=>{
+  import('./Item/Item.js').then((all) => {
+    AllItem.value = all.default
+    SetItem()
+  })
+})
+
+//設定玩家持有道具
+function SetItem(){
+  let temItem = []
+  for(let z=0;z<User.Player.item.length;z++){//判斷玩家持有幾種道具
+    for(let x=0;x<AllItem.value.length;x++){//遍歷道具資料庫
+      if(User.Player.item[z].number == AllItem.value[x].number){
+        temItem.push(AllItem.value[x])
+        temItem[z].num = User.Player.item[z].num
+        haveItem.value = temItem
+      }
+    }
+  }
+}
+
+
+//玩家點選的道具
+const NowItem = ref({
+  number:'',//編號
+  name:'',//名字
+  num:0,//數量
+  illustrate:'',//主要說明
+  note:'',//額外說明
+  use:undefined,//函式
+  img:'./images/Item/pack.png',//圖片
+})
+
+//展示玩家點選道具
+function openitem(number='',name='',type='',num=0,illustrate='',note='',fun=undefined,img='./images/Item/pack.png'){
+  NowItem.value.number = number
+  NowItem.value.name = name
+  NowItem.value.type = type
+  NowItem.value.num = num
+  NowItem.value.illustrate = illustrate
+  NowItem.value.note = note
+  NowItem.value.use = fun
+  NowItem.value.img = img
+}
+
+//使用道具
+function use(){
+  if(NowItem.value.use !== undefined){
+    NowItem.value.use() //執行他的函式
+
+    for(let z=0;z<User.Player.item.length;z++){//
+      if(User.Player.item[z].number === NowItem.value.number){
+        if(NowItem.value.type === '消耗'){
+          User.Player.item[z].num -= 1
+        }
+        if(User.Player.item[z].num === 0){
+          User.Player.item.splice(z,1)
+        }
+      }
+    }
+    openitem()
+    SetItem()
+  }
+  check.value = false
+}
+
+const check = ref(false)
+
+//給GM送信，送信會記錄在該玩家的資料下
+//供GM查看
+const letterText = ref('')
+function letter(){
+  User.Player.letterArray.push(letterText.value)
+  letterText.value = ''
+  User.Player.letter = false
+}
+
+
 
 </script>
 
@@ -10,6 +95,20 @@ const nowtrait = ref('all')
 <div id="center_wrapper" class="flex_center">
   <div id="wrapper">
     <div class="home_top">
+      <div class="check" :class="{display_none:!check}">
+        <p>您確定要使用<span>{{NowItem.name}}</span>？</p>
+        <p>持有<span>{{NowItem.num}}</span>個</p>
+        <div><button @click="use()">確定</button>
+        <button @click="check = false">取消</button></div>
+      </div>
+
+      <div class="check" :class="{display_none:!User.Player.letter}">
+        <input type="text" v-model.lazy="letterText">
+        <div><button @click="letter()">送出</button>
+        <button @click="User.Player.letter = false">取消</button></div>
+      </div>
+
+
       <div class="type">
         <button @click="nowtrait='all'" :class="{now_botton:nowtrait == 'all'}">全部</button>
         <button @click="nowtrait='消耗'" :class="{now_botton:nowtrait == '消耗'}">消耗</button>
@@ -20,178 +119,18 @@ const nowtrait = ref('all')
       
       <div class="pack-boxhome">
       <div class="pack-boxtop">
-
-        <!-- v-for="(item, key) in havercardData" -->
-        <!-- :class="{ display_none:nowtrait !== item.trait && nowtrait !== 'all'},{display_none:nowawake !== item.awake && nowawake !== null}" -->
-        <div class="pack-box"   >
+        <!-- for START -->
+        <div class="pack-box" v-for="(item, key) in haveItem" @click="openitem(item.number,item.name,item.type,item.num,item.illustrate,item.note,item.use,item.img)" :class="{ display_none:nowtrait !== item.type && nowtrait !== 'all'}">
         <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
+          <img :src="item.img" alt="">
         </div>
         <div class="pack-hidden">
           <div class="pack-data">
-            <p>1</p>
+            <p>{{item.num}}</p>
           </div>
         </div>
         </div>
-
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>7</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>99</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>99</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>99</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>99</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>99</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>75</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>55</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>15</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>9</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>22</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>3</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>65</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>9</p>
-          </div>
-        </div>
-        </div>
-        <div class="pack-box"   >
-        <div class="pack-img">
-          <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-        </div>
-        <div class="pack-hidden">
-          <div class="pack-data">
-            <p>1</p>
-          </div>
-        </div>
-        </div>
-        
-        
-        
-        
-
-
-
-
+        <!-- for END -->
       </div>
       </div>
 
@@ -200,24 +139,24 @@ const nowtrait = ref('all')
       <div class="pack-info">
         <div class="pack-info-img">
           <div class="info-img">
-            <img src="../../public/nzwu2vpc3gc.jpeg" alt="">
-            <div class="info-num"><p>2</p></div>
+            <img :src="NowItem.img" alt="">
+            <div class="info-num"><p>{{NowItem.num}}</p></div>
           </div>
           
         </div>
         <div class="pack-info-text">
           <div class="pack-info-name">
-            破境仙丹
+            {{NowItem.name}}
           </div>
           <div class="pack-info-illustrate">
-            上古仙界秘丹，吃一顆就升仙
+            {{NowItem.illustrate}}
           </div>
           <div class="pack-info-note">
-            生死由天，生還率0.001%  
+            {{NowItem.note}}
           </div>
         </div>
         <div class="pack-info-use">
-          <button>使用</button>
+          <button @click="check = true">使用</button>
         </div>
       </div>
       </div>
@@ -232,6 +171,8 @@ const nowtrait = ref('all')
 
 
 <style lang="scss" scoped>
+
+
 .pack-infohme{
   height: 21.5%;
 }
@@ -245,9 +186,10 @@ const nowtrait = ref('all')
     align-items: center;
     .info-img{
       width: 100%;
-      height: auto;
+      height: 100px;
       img{
         width: 100%;
+        height: 100%;
       }
       .info-num{
       position: absolute;
@@ -339,10 +281,10 @@ transition: .2s;
     .pack-img{
       line-height: 0;
       width: 100%;
-      height: auto;
+      height: 100%;
       img{
         width: 100%;
-        height: auto;
+        height: 100%;
       }
     }
   }

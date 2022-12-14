@@ -17,6 +17,7 @@
 //共用css
 p ,h1 ,h2 ,h3 ,h4 ,h5 ,h6 ,a ,span ,button ,div {
   font-family: 'zhH2';
+  color: black;
 }
 .flex_center{
   display: flex;
@@ -36,7 +37,54 @@ p ,h1 ,h2 ,h3 ,h4 ,h5 ,h6 ,a ,span ,button ,div {
   height: 95%;
 }
 
+//二次確認
+.check{
+  position:absolute;
+  bottom: 40%;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.719);
+  padding: 10px 40px 10px 40px;
+  border-radius: 20px;
+  width: 300px;
+  input{
+    width: 100%;
+  }
+  p{
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  span{
+    color: red;
+  }
+  div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  button{
+    border: none;
+    background: white;
+    padding: 5px;
+    margin: 6px;
+    cursor: pointer;
+  }
+  button:hover{
+    border: none;
+    background: rgb(204, 204, 204);
+    padding: 5px;
+    margin: 6px;
+  }
+}
 
+.background-img{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+}
 
 .display_flex{
   display: flex !important;

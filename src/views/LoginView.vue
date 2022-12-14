@@ -24,18 +24,22 @@ const User = useCounterStore()
 function getfb(account){
   get(child(dbRef, `Users/${account}`)).then((snapshot) => {
   if (snapshot.exists()) {
-    User.user.account = account
-    User.user.havecard = snapshot.val().havercard
-    User.user.remainCard = snapshot.val().remainCard
-    User.user.team = snapshot.val().team
-    User.Profile.img = snapshot.val().Profile.img
-    User.ProfileCover.img = snapshot.val().ProfileCover.img
-    User.SummonPoints = snapshot.val().SummonPoints
-    User.AwakePoints = snapshot.val().AwakePoints
-    User.drama = snapshot.val().drama
-    User.pvp= snapshot.val().pvp
-    User.win= snapshot.val().win
-    User.lose= snapshot.val().lose
+    
+    User.Player.name = account
+    User.Player.lv = snapshot.val().lv
+    User.Player.props = snapshot.val().props
+    User.Player.fragments = snapshot.val().fragments
+    User.Player.interfere = snapshot.val().interfere
+    User.Player.power = snapshot.val().power
+    User.Player.probability = snapshot.val().probability
+    User.Player.money = snapshot.val().money
+    User.Player.img = snapshot.val().img
+    User.Player.meditate = snapshot.val().meditate
+    User.Player.meditateStatrt = snapshot.val().meditateStatrt
+    User.Player.meditateStatrtTime = snapshot.val().meditateStatrtTime
+    User.Player.item = snapshot.val().item
+    User.Player.letter = snapshot.val().letter
+    User.Player.letterArray = snapshot.val().letterArray
   } else {
     console.log("沒有資料");
   }
@@ -83,6 +87,21 @@ function Register(){
             let Today = new Date();
             set(fbref(db, `Users/${UserName.value}`), {
                 //帳戶資料
+                name:UserName.value,
+                lv:'練體',//當前境界
+                props:'無',//靈力加成道具，只能一個
+                fragments:0,//位面碎片
+                interfere:0,//影響度(干涉力)
+                power:0,//靈力
+                probability:24,//劫運
+                money:100,//靈石
+                img:'./gg0022.png',//玩家代表人物
+                meditate:false,//是否打坐
+                meditateStatrt:0,//打坐開始當下時間
+                meditateStatrtTime:'',//打坐當下完整時間
+                item:[{number:'0',num:10},{number:'005',num:2},{number:'008',num:1},{number:'000',num:1},{number:'007',num:1},],//持有道具
+                letter:false,
+                letterArray:['',],
                 password:UserPassword.value,
                 time:Today.getFullYear() +"/"+ (Today.getMonth()+1) +"/"+ Today.getDate() +"/"+ Today.getHours()+":"+ Today.getMinutes() +":"+ Today.getSeconds(),
             });
@@ -112,6 +131,7 @@ const nameeee = ref('') //玩家姓名，判斷有無登入，此值是暫用值
 <template>
 <div id="center_wrapper" class="flex_center">
   <div id="wrapper">
+    <img class="background-img" src="../../public/images/chinese_style_910737.jpg" alt="">
 
     <div class="login" :class="{display_none:nameeee ==''}">
         <div class="login-home">
@@ -144,6 +164,7 @@ const nameeee = ref('') //玩家姓名，判斷有無登入，此值是暫用值
 
 
 <style lang="scss" scoped>
+
 .login{
     position: absolute;
     bottom: 5%;
