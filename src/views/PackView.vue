@@ -37,6 +37,7 @@ const NowItem = ref({
   number:'',//編號
   name:'',//名字
   num:0,//數量
+  consume:null,//是否為消耗品
   illustrate:'',//主要說明
   note:'',//額外說明
   use:undefined,//函式
@@ -44,11 +45,12 @@ const NowItem = ref({
 })
 
 //展示玩家點選道具
-function openitem(number='',name='',type='',num=0,illustrate='',note='',fun=undefined,img='./images/Item/pack.png'){
+function openitem(number='',name='',type='',num=0,consume=null,illustrate='',note='',fun=undefined,img='./images/Item/pack.png'){
   NowItem.value.number = number
   NowItem.value.name = name
   NowItem.value.type = type
   NowItem.value.num = num
+  NowItem.value.consume = consume
   NowItem.value.illustrate = illustrate
   NowItem.value.note = note
   NowItem.value.use = fun
@@ -62,9 +64,11 @@ function use(){
 
     for(let z=0;z<User.Player.item.length;z++){//
       if(User.Player.item[z].number === NowItem.value.number){
-        if(NowItem.value.type === '消耗'){
+        //偵測現在使用道具是否消耗，是的話-1
+        if(NowItem.value.consume){
           User.Player.item[z].num -= 1
         }
+        //偵測現在使用道具是否數量歸零，是的話從使用者背包移除
         if(User.Player.item[z].num === 0){
           User.Player.item.splice(z,1)
         }
@@ -120,7 +124,7 @@ function letter(){
       <div class="pack-boxhome">
       <div class="pack-boxtop">
         <!-- for START -->
-        <div class="pack-box" v-for="(item, key) in haveItem" @click="openitem(item.number,item.name,item.type,item.num,item.illustrate,item.note,item.use,item.img)" :class="{ display_none:nowtrait !== item.type && nowtrait !== 'all'}">
+        <div class="pack-box" v-for="(item, key) in haveItem" @click="openitem(item.number,item.name,item.type,item.num,item.consume,item.illustrate,item.note,item.use,item.img)" :class="{ display_none:nowtrait !== item.type && nowtrait !== 'all'}">
         <div class="pack-img">
           <img :src="item.img" alt="">
         </div>

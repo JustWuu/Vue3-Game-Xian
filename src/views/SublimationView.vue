@@ -84,6 +84,10 @@ function meditateFun(magn){//倍率
     readyPower += lgtime.value * 10000
     power02.value = lgtime.value * 10000
     break;
+    case "世界碎片":
+    readyPower += lgtime.value * 1000000
+    power02.value = lgtime.value * 1000000
+    break;
 
     default:
     console.log('偵測失敗')
@@ -142,6 +146,9 @@ function powerGOGO(){
     switch (User.Player.props) {
       case "汲靈石":
       User.Player.power += 20
+      break;
+      case "世界碎片":
+      User.Player.power += 1000
       break;
 
       default:

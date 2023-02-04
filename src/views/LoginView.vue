@@ -99,7 +99,7 @@ function Register(){
                 meditate:false,//是否打坐
                 meditateStatrt:0,//打坐開始當下時間
                 meditateStatrtTime:'',//打坐當下完整時間
-                item:[{number:'0',num:10},{number:'005',num:2},{number:'008',num:1},{number:'000',num:1},{number:'007',num:1},],//持有道具
+                item:[{number:'0',num:10},{number:'005',num:2},{number:'008',num:1},{number:'000',num:1},{number:'007',num:1},{number:'100',num:1},{number:'400',num:1},{number:'700',num:1},{number:'1000',num:1}],//持有道具
                 letter:false,
                 letterArray:['',],
                 password:UserPassword.value,

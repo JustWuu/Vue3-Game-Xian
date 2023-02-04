@@ -23,11 +23,8 @@ const message = ref('')
 //送出文字
 function addmessage(){
   const key = push(chatRef).key;
-  // if(!message.value.trim()||User.user.account ==''){
-  //   return 
-  // }
-  //這段是偵測空字元及無登入，因還沒做登入系統，先幹掉
-  if(!message.value.trim()){
+  //偵測沒輸入文字或沒登入
+  if(!message.value.trim()||User.Player.name ==''){
     return 
   }
   let Today = new Date();
@@ -89,7 +86,8 @@ const open = ref(false)
 
 
   </div>
-  <div class="chat-input" :class="{display_none:!open}"><input type="text" v-model="message" @keyup.enter="addmessage"><button @click="addmessage">送出</button></div>
+  <div class="chat-input" :class="{display_none:!open}"><input type="text" v-model="message" @keyup.alt.enter="addmessage"><button @click="addmessage">送出</button></div>
+  <!-- 有使用者使用enter選字導致訊息送出問題 -->
 </template>
   
 <style lang="scss" scoped>

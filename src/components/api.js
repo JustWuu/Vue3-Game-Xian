@@ -6,4 +6,4 @@ const userIPRequest = axios.create({
 
 
 
-  export const GetIP = data => userIPRequest.get(data);
+export const GetIP = data => userIPRequest.get(data);
